@@ -129,6 +129,7 @@ startQuizButton.addEventListener("click", function (event) {
     const pctScore = document.getElementById("pct-score");
     const numScore = document.getElementById("num-score");
     const timeScoreElement = document.getElementById("time-score");
+
     
     //  display end screen and hide questions page
      questionsSection.classList.add("hide");
@@ -145,19 +146,12 @@ startQuizButton.addEventListener("click", function (event) {
 
 
     // * displays the time remaining
-        // ? & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left"
+        // ? & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left" *bonus if you have time left
 
-
-
-        // & if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect) 
+        // if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect) 
         const timeScore = localStorage.getItem("timeScore");
         timeScoreElement.textContent = timeScore;
         
-
-    // ? displays the amount of questions answered
-        // & if the timer ended at 0 and not all questions were answered, it should display the amount of buttons clicked concat with "out out 15 questions" (pretend its 15 questions for now)
-
-        // & if all questions were answered, it should display "15 out of 15 questions were answered"
 
     // * Add initials to add to leaderboard:
         // ^ a textbox should appear to add name/initials to leaderboard with a submit button
@@ -167,7 +161,43 @@ startQuizButton.addEventListener("click", function (event) {
         // ^ there should be a 'go back' button which would bring you back to the start of the quiz, and the quiz should be able to be taken again. 
 
 // TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
-    // * this is in a new HTML page
+
+const initialsInput = document.getElementById("initials");
+const submitButton = document.getElementById("submit");
+
+    // add an event listener to the submit button
+     submitButton.addEventListener("click", function() {
+        const playerInitials = initialsInput.value.trim();
+
+        if (playerInitials !== "") {
+            //get exisiting scores from local storage or start an empty array
+            const highscores = JSON.parse(localStorage.getItem("highscores"))
+
+            //create new entry
+            const newHighScore = {
+                initials: playerInitials,
+                numScore: correctAnswers,
+                pctScore: (correctAnswers / questions.length) * 100,
+                time: localStorage.getItem("timeScore") || 0,
+            };
+
+            //add the new score to the array
+            highscores.push(newHighScore);
+
+            //save the new score to the local storage
+            localStorage.setItem("highscores", JSON.stringify(highscores));
+
+        }
+    })
+
+
+
+
+
+
+
+
+    // * this is in a new HTML page - create new HTML page (look in folder)
     // * the leaderboard should show in the list order:
         // ^ the initials
         // ^ the time they got
