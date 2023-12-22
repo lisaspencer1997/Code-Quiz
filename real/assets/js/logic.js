@@ -7,22 +7,38 @@ const questionsSection = document.getElementById("questions");
 
 startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
+    
     // * remove the title page and button
      startScreen.classList.add("hide");
-
-    // * load the first question of the quiz    
      questionsSection.classList.remove("hide");
+    
+    // * load the first question of the quiz    
+     loadQuestion();
 
+});     
     // * start the timer of 10 seconds})
-});
 
 
 
 // TODO: When the first question loads, it should:
     // * display the question
-    // * display the multiple-choice (possibly 4 options) answers as listed buttons
-    // * display the timer counting down every second
+    // create a function to load the question
+     function loadQuestion() {
+        const questionTitle = document.getElementById("question-title");
+        const choicesContainer = document.getElementById("choices");
 
+        // ? set the title
+
+        questionTitle.textContent = question.question;
+    
+    // * display the multiple-choice (possibly 4 options) answers as listed buttons
+        question.choices.forEach((choice, index) => {
+            const choiceElement = document.createElement("div");
+            choiceElement.className = "choice";
+            choiceElement.textContent = `${index}. ${choice}`;
+
+        })// * display the timer counting down every second
+     }
     // & TODO: When the CORRECT answer is selected (the button is clicked), it should:
         // * display the NEXT question in the same way as the first one
         // * display the NEXT multiple choice answers as listed buttons
