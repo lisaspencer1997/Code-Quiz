@@ -15,17 +15,16 @@ startQuizButton.addEventListener("click", function (event) {
     startScreen.classList.add("hide");
     questionsSection.classList.remove("hide");
     loadQuestion();
-});
+
     
     // * start the timer of 10 seconds})
     
-     startTimer();
-    
+     startTimer();    
     
     // * function to start timer
 
     function startTimer() {
-        let timeLeft = 60; // gives 1 minute (60 seconds) for the timer
+        let timeLeft = 5; // ! changing to 5 second to make testing easier -- remember to change to higher later
         
         timer = setInterval (function () {
             timeLeft--;
@@ -39,7 +38,7 @@ startQuizButton.addEventListener("click", function (event) {
 
     };     
 
-
+});
 
 // TODO: When the first question loads, it should:
 
@@ -48,7 +47,7 @@ startQuizButton.addEventListener("click", function (event) {
         const choicesContainer = document.getElementById("choices");
 
         //  we need to check if there are any questions left in the bank
-        if (currentQuestionIndex < questions.length) {
+        if (currentQuestionIndex <= questions.length) {
             const currentQuestion = questions[currentQuestionIndex];
         
          //  setting the title on the screen
@@ -57,7 +56,7 @@ startQuizButton.addEventListener("click", function (event) {
          //  clear the choices container
          choicesContainer.innerHTML = "";
     
-            // * display the multiple-choice answers as listed buttons
+         //  display the multiple-choice answers as listed buttons
             currentQuestion.choices.forEach((choice, index) => {
                 const choiceButton = document.createElement("button");
                 choiceButton.className = "choice-button";
@@ -75,39 +74,34 @@ startQuizButton.addEventListener("click", function (event) {
         endQuiz();
      }
 
-        // * display the timer counting down every second
-
-
     }
     // TODO: When an answer is selected (the button is clicked), the code needs to remember which choice was selected (i.e. was it correct or incorrect) and then should display the next question:
     
     // ~ When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
 
-        // * remember the users choice as either correct or incorrect
+        //  remember the users choice as either correct or incorrect
          function remUserChoice(userChoice, correctAnswer) {
+            
             const isCorr = userChoice === correctAnswer;
 
-        // * update the score of correct answers
-         if (isCorr) {
-            correctAnswers++;
-         }
+            //  update the score of correct answers
+            if (isCorr) {
+                correctAnswers++;
+            }
 
-        // * move to the next question
-         currentQuestionIndex++;
-         loadQuestion();
+            // check if question is last one
+             if (currentQuestionIndex === questions.length - 1) {
+                const timeRemaining = Math.max(0, 60 - timerElement.textContent);
 
-        // * the timer should continue counting down as normal (should not change from first job)
+                // store it in local
+                 localStorage.setItem("timeScore", timeRemaining);
+            }
 
+            //  move to the next question
+             currentQuestionIndex++;
+             loadQuestion();
 
-         }
-
-
-// TODO: When the timer hits 0, it should:
-    // * the counter should stop going furthet than 0
-    // * the quiz should end, meaning if there are still questions in the question bank, they should not be displayed, and the 'end of quiz' screen should display
-
-// TODO: When the last question of the question bank has been displayed:
-    // * the quiz should end, meaning if there is still time ticking down to the 0, the time is saved in local storage, and the 'end of quiz' screen should display
+        }
 
 
 // TODO: End of quiz screen:
@@ -115,30 +109,35 @@ startQuizButton.addEventListener("click", function (event) {
     const endScreen = document.getElementById("end-screen");
     const pctScore = document.getElementById("pct-score");
     const numScore = document.getElementById("num-score");
+    const timeScore = document.getElementById("time-score");
     
-    // * display end screen and hide questions page
+    //  display end screen and hide questions page
      questionsSection.classList.add("hide");
      endScreen.classList.remove("hide");
 
-    // * happens either:
-        // ^ when the time ends at 0
-
-        // ^ when the last question in the question bank has been answered
-
     // * displays the score
-        // ^ the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
+        //  the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
 
         const numsScore = correctAnswers // the amount of correct answers
-        const pctsScore = (correctAnswers / currentQuestionIndex) * 100 //show as percentage
+        const pctsScore = (correctAnswers / questions.length) * 100 //show as percentage
         pctScore.textContent = `${pctsScore}%`;
-        numScore.textContent = `${numsScore} out of ${currentQuestionIndex} questions correct!`;
+        numScore.textContent = `${numsScore} out of ${questions.length} questions correct!`;
+
 
 
     // * displays the time remaining
-        // & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left"
+        // ? & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left"
+
+
 
         // & if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect)
-    // * displays the amount of questions answered ** this is only a bonus if i have enough time as it is not in the acceptance criteria
+        const secondsScore = 60 - timerElement.textContent;   
+        timeScore.textContent = `${secondsScore.textContent}`
+
+        localStorage.setItem("secondsStore", secondsScore);
+        
+
+    // ? displays the amount of questions answered
         // & if the timer ended at 0 and not all questions were answered, it should display the amount of buttons clicked concat with "out out 15 questions" (pretend its 15 questions for now)
 
         // & if all questions were answered, it should display "15 out of 15 questions were answered"
