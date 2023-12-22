@@ -3,6 +3,7 @@ const startScreen = document.getElementById("start-screen");
 const questionsSection = document.getElementById("questions");
 
 let currentQuestionIndex = 0;
+let correctAnswers = 0;
 
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
@@ -98,7 +99,8 @@ startQuizButton.addEventListener("click", function (event) {
 // TODO: End of quiz screem:
  function endQuiz() {
     const endScreen = document.getElementById("end-screen");
-    const finalScore = document.getElementById("final-score");
+    const pctScore = document.getElementById("pct-score");
+    const numScore = document.getElementById("num-score");
     
     // * display end screen and hide questions page
      questionsSection.classList.add("hide");
@@ -108,12 +110,15 @@ startQuizButton.addEventListener("click", function (event) {
         // ^ when the time ends at 0
 
         // ^ when the last question in the question bank has been answered
-        
+
     // * displays the score
         // ^ the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
 
-        const score = currentQuestionIndex;
-        finalScore.textContent = score;
+        const numsScore = correctAnswers // the amount of correct answers
+        const pctsScore = (correctAnswers / currentQuestionIndex) * 100 //show as percentage
+        pctScore.textContent = `${pctsScore}%`;
+        numScore.textContent = `${numsScore} out of ${currentQuestionIndex} questions correct!`;
+
 
     // * displays the time remaining
         // & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left"
