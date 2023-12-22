@@ -49,8 +49,13 @@ startQuizButton.addEventListener("click", function (event) {
                 const choiceButton = document.createElement("button");
                 choiceButton.className = "choice-button";
                 choiceButton.textContent = choice;
+                
+                // buttons should be clickable and saved
+                choiceButton.addEventListener("click", remUserChoice);
+
                 choicesContainer.appendChild(choiceButton);
             })
+
         } else {
         endQuiz();
      }
