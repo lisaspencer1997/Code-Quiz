@@ -52,7 +52,9 @@ startQuizButton.addEventListener("click", function (event) {
                 choiceButton.textContent = choice;
                 
                 // buttons should be clickable and saved
-                choiceButton.addEventListener("click", remUserChoice);
+                choiceButton.addEventListener("click", function () {
+                    remUserChoice(choice, currentQuestion.correctAnswer);
+                });
 
                 choicesContainer.appendChild(choiceButton);
             })
@@ -69,6 +71,11 @@ startQuizButton.addEventListener("click", function (event) {
         // * remember the users choice as either correct or incorrect
          function remUserChoice(userChoice, correctAnswer) {
             const isCorr = userChoice === correctAnswer;
+
+        // * update the score of correct answers
+         if (isCorr) {
+            correctAnswers++;
+         }
 
         // * move to the next question
          currentQuestionIndex++;
