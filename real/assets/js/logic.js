@@ -2,6 +2,8 @@ const startQuizButton = document.querySelector("#start");
 const startScreen = document.getElementById("start-screen");
 const questionsSection = document.getElementById("questions");
 
+let currentQuestionIndex = 0;
+
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
 
@@ -14,48 +16,68 @@ startQuizButton.addEventListener("click", function (event) {
     
     // * load the first question of the quiz    
      loadQuestion();
+    
+    // * start the timer of 10 seconds})
+    
+
 
 });     
-    // * start the timer of 10 seconds})
+    
 
 
 
 // TODO: When the first question loads, it should:
-    // * display the question
-    // create a function to load the question
-     function loadQuestion() {
+
+ // * display the question
+ // create a function to load the question
+    function loadQuestion() {
         const questionTitle = document.getElementById("question-title");
         const choicesContainer = document.getElementById("choices");
 
-        // ~ setting the title on the screen
-        questionTitle.textContent = question.question;
+        //  we need to check if there are any questions left in the bank
+        if (currentQuestionIndex < questions.length) {
+            const currentQuestion = questions[currentQuestionIndex];
+        
+         //  setting the title on the screen
+         questionTitle.textContent = currentQuestion.title;
 
-        // ~ clear the choices container
-        choicesContainer.innerHTML = "";
+         //  clear the choices container
+         choicesContainer.innerHTML = "";
     
-    // * display the multiple-choice answers as listed buttons
-        question.choices.forEach((choice, index) => {
-            const choiceButton = document.createElement("button");
-            choiceButton.className = "choice-button";
-            choiceButton.textContent = choice;
-
-            choicesContainer.appendChild(choiceButton);
-        })
-    
+            // * display the multiple-choice answers as listed buttons
+            currentQuestion.choices.forEach((choice, index) => {
+                const choiceButton = document.createElement("button");
+                choiceButton.className = "choice-button";
+                choiceButton.textContent = choice;
+                choicesContainer.appendChild(choiceButton);
+            })
+        } else {
+        endQuiz();
+     }
 
         // * display the timer counting down every second
 
 
-     }
-    // & TODO: When the CORRECT answer is selected (the button is clicked), it should:
-        // * display the NEXT question in the same way as the first one
-        // * display the NEXT multiple choice answers as listed buttons
+    }
+    // TODO: When an answer is selected (the button is clicked), the code needs to remember which choice was selected (i.e. was it correct or incorrect) and then should display the next question:
+        // * remember the users choice as either correct or incorrect
+         function remUserChoice(userChoice, correctAnswer) {
+            const isCorr = userChoice === correctAnswer;
+
+        // * move to the next question
+         currentQuestionIndex++;
+         loadQuestion();
+
         // * the timer should continue counting down as normal (should not change from first job)
+
+
+
         // * the score goes up by 1 (the score is hidden from the view of the user until the end screen)
 
-    // & TODO: When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should:
-        // * display the NEXT question in the same way as the first one
-        // * display the NEXT multiple choice answers as listed buttons
+         }
+
+    // TODO: When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should:
+        // * display the NEXT question and answers in the same way as the first one
         // * the timer should continue counting down as normal (should not change from first job) 
             // ! BUT ALSO IT SHOULD REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
         // * the score does not move (the score is hidden from the view of the user until the end screen)
@@ -66,6 +88,7 @@ startQuizButton.addEventListener("click", function (event) {
 
 // TODO: When the last question of the question bank has been displayed:
     // * the quiz should end, meaning if there is still time ticking down to the 0, the time is saved in local storage, and the 'end of quiz' screen should display
+
 
 // TODO: End of quiz screem:
     // * happens either:
