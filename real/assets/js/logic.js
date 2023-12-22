@@ -75,7 +75,7 @@ startQuizButton.addEventListener("click", function (event) {
 
         // * the timer should continue counting down as normal (should not change from first job)
 
-
+        
 
         // * the score goes up by 1 (the score is hidden from the view of the user until the end screen)
 
@@ -96,11 +96,25 @@ startQuizButton.addEventListener("click", function (event) {
 
 
 // TODO: End of quiz screem:
+ function endQuiz() {
+    const endScreen = document.getElementById("end-screen");
+    const finalScore = document.getElementById("final-score");
+    
+    // * display end screen and hide questions page
+     questionsSection.classList.add("hide");
+     endScreen.classList.remove("hide");
+
     // * happens either:
         // ^ when the time ends at 0
+
         // ^ when the last question in the question bank has been answered
+        
     // * displays the score
         // ^ the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
+
+        const score = currentQuestionIndex;
+        finalScore.textContent = score;
+
     // * displays the time remaining
         // & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left"
 
@@ -124,3 +138,5 @@ startQuizButton.addEventListener("click", function (event) {
         // ^ the time they got
         // ^ the score they got
     // * 'back to the home screen' button should have a link back to the game page
+
+ }
