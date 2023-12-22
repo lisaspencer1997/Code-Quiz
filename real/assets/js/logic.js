@@ -1,39 +1,55 @@
 const startQuizButton = document.querySelector("#start");
 const startScreen = document.getElementById("start-screen");
 const questionsSection = document.getElementById("questions");
-const timerElement = document.getElementById("time");
+const timerElement = document.getElementById("seconds-counting-down");
+const timeScoreElement = document.getElementById("time-score");
 
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let timer;
+let timeAllowed = 7; // ! changing to 7 second to make testing easier -- remember to change to higher later
 
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
 
 startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
+    
+    // * need to update time score from local storage every new quiz
+     
+     localStorage.removeItem("timeScore");
+
+     timerElement.textContent = timeAllowed;
+
     startScreen.classList.add("hide");
     questionsSection.classList.remove("hide");
     loadQuestion();
 
-    
-    // * start the timer of 10 seconds})
+    // * start the timer
     
      startTimer();    
     
     // * function to start timer
 
     function startTimer() {
-        let timeLeft = 5; // ! changing to 5 second to make testing easier -- remember to change to higher later
-        
         timer = setInterval (function () {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
+            timeAllowed--;
+            timerElement.textContent = timeAllowed;
 
-            if (timeLeft <=0) {
+            if (timeAllowed <=0 | currentQuestionIndex === questions.length) {
                 clearInterval(timer);
+
+                // if the last uestion is answered, 
+                if (currentQuestionIndex === questions.length) {
+                    const timeRemaining = Math.max(0, timeAllowed);
+                    localStorage.setItem("timeScore", timeRemaining);
+                    timeScoreElement.textContent = timeRemaining;
+                    timerElement.textContent = timeRemaining;
+                }
+                    
                 endQuiz();
             }
+        
         }, 1000);
 
     };     
@@ -47,7 +63,7 @@ startQuizButton.addEventListener("click", function (event) {
         const choicesContainer = document.getElementById("choices");
 
         //  we need to check if there are any questions left in the bank
-        if (currentQuestionIndex <= questions.length) {
+        if (currentQuestionIndex < questions.length) {
             const currentQuestion = questions[currentQuestionIndex];
         
          //  setting the title on the screen
@@ -91,10 +107,13 @@ startQuizButton.addEventListener("click", function (event) {
 
             // check if question is last one
              if (currentQuestionIndex === questions.length - 1) {
-                const timeRemaining = Math.max(0, 60 - timerElement.textContent);
+                const timeRemaining = Math.max(0, timeAllowed);
 
                 // store it in local
                  localStorage.setItem("timeScore", timeRemaining);
+
+                // display time remaining on the page
+                 timeScoreElement.textContent = timeRemaining;
             }
 
             //  move to the next question
@@ -104,12 +123,12 @@ startQuizButton.addEventListener("click", function (event) {
         }
 
 
-// TODO: End of quiz screen:
+// TODO: ///////////////////////////////////////////////////////////////////////////////////////////////////////////////End of quiz screen:
  function endQuiz() {
     const endScreen = document.getElementById("end-screen");
     const pctScore = document.getElementById("pct-score");
     const numScore = document.getElementById("num-score");
-    const timeScore = document.getElementById("time-score");
+    const timeScoreElement = document.getElementById("time-score");
     
     //  display end screen and hide questions page
      questionsSection.classList.add("hide");
@@ -130,11 +149,9 @@ startQuizButton.addEventListener("click", function (event) {
 
 
 
-        // & if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect)
-        const secondsScore = 60 - timerElement.textContent;   
-        timeScore.textContent = `${secondsScore.textContent}`
-
-        localStorage.setItem("secondsStore", secondsScore);
+        // & if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect) 
+        const timeScore = localStorage.getItem("timeScore");
+        timeScoreElement.textContent = timeScore;
         
 
     // ? displays the amount of questions answered
