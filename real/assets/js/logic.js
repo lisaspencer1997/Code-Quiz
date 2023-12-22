@@ -35,11 +35,11 @@ startQuizButton.addEventListener("click", function (event) {
     
     // * display the multiple-choice answers as listed buttons
         question.choices.forEach((choice, index) => {
-            const choiceElement = document.createElement("div");
-            choiceElement.className = "choice";
-            choiceElement.textContent = `${index + 1}. ${choice}`;
+            const choiceButton = document.createElement("button");
+            choiceButton.className = "choice-button";
+            choiceButton.textContent = choice;
 
-            choicesContainer.appendChild(choiceElement);
+            choicesContainer.appendChild(choiceButton);
         })
     
 
