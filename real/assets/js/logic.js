@@ -1,7 +1,22 @@
+const startQuizButton = document.querySelector("#start");
+const startScreen = document.getElementById("start-screen");
+const questionsSection = document.getElementById("questions");
+
+
 // TODO: When the 'Start Quiz' button is clicked, it should:
+
+startQuizButton.addEventListener("click", function (event) {
+    event.preventDefault();
     // * remove the title page and button
-    // * load the first question of the quiz
-    // * start the timer of 10 seconds
+     startScreen.classList.add("hide");
+
+    // * load the first question of the quiz    
+     questionsSection.classList.remove("hide");
+
+    // * start the timer of 10 seconds})
+});
+
+
 
 // TODO: When the first question loads, it should:
     // * display the question
