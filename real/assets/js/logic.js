@@ -27,17 +27,25 @@ startQuizButton.addEventListener("click", function (event) {
         const questionTitle = document.getElementById("question-title");
         const choicesContainer = document.getElementById("choices");
 
-        // ? set the title
-
+        // ~ setting the title on the screen
         questionTitle.textContent = question.question;
+
+        // ~ clear the choices container
+        choicesContainer.innerHTML = "";
     
-    // * display the multiple-choice (possibly 4 options) answers as listed buttons
+    // * display the multiple-choice answers as listed buttons
         question.choices.forEach((choice, index) => {
             const choiceElement = document.createElement("div");
             choiceElement.className = "choice";
-            choiceElement.textContent = `${index}. ${choice}`;
+            choiceElement.textContent = `${index + 1}. ${choice}`;
 
-        })// * display the timer counting down every second
+            choicesContainer.appendChild(choiceElement);
+        })
+    
+
+        // * display the timer counting down every second
+
+
      }
     // & TODO: When the CORRECT answer is selected (the button is clicked), it should:
         // * display the NEXT question in the same way as the first one
