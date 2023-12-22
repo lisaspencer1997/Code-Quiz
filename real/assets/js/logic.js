@@ -1,36 +1,48 @@
 const startQuizButton = document.querySelector("#start");
 const startScreen = document.getElementById("start-screen");
 const questionsSection = document.getElementById("questions");
+const timerElement = document.getElementById("time");
 
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
+let timer;
 
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
 
 startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
-    
-    // * remove the title page and button
-     startScreen.classList.add("hide");
-     questionsSection.classList.remove("hide");
-    
-    // * load the first question of the quiz    
-     loadQuestion();
+    startScreen.classList.add("hide");
+    questionsSection.classList.remove("hide");
+    loadQuestion();
+});
     
     // * start the timer of 10 seconds})
     
-
-
-});     
+     startTimer();
     
+    
+    // * function to start timer
+
+    function startTimer() {
+        let timeLeft = 60; // gives 1 minute (60 seconds) for the timer
+        
+        timer = setInterval (function () {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+
+            if (timeLeft <=0) {
+                clearInterval(timer);
+                endQuiz();
+            }
+        }, 1000);
+
+    };     
 
 
 
 // TODO: When the first question loads, it should:
 
- // * display the question
- // create a function to load the question
     function loadQuestion() {
         const questionTitle = document.getElementById("question-title");
         const choicesContainer = document.getElementById("choices");
@@ -68,6 +80,9 @@ startQuizButton.addEventListener("click", function (event) {
 
     }
     // TODO: When an answer is selected (the button is clicked), the code needs to remember which choice was selected (i.e. was it correct or incorrect) and then should display the next question:
+    
+    // ~ When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
+
         // * remember the users choice as either correct or incorrect
          function remUserChoice(userChoice, correctAnswer) {
             const isCorr = userChoice === correctAnswer;
@@ -83,17 +98,9 @@ startQuizButton.addEventListener("click", function (event) {
 
         // * the timer should continue counting down as normal (should not change from first job)
 
-        
-
-        // * the score goes up by 1 (the score is hidden from the view of the user until the end screen)
 
          }
 
-    // TODO: When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should:
-        // * display the NEXT question and answers in the same way as the first one
-        // * the timer should continue counting down as normal (should not change from first job) 
-            // ! BUT ALSO IT SHOULD REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
-        // * the score does not move (the score is hidden from the view of the user until the end screen)
 
 // TODO: When the timer hits 0, it should:
     // * the counter should stop going furthet than 0
@@ -103,7 +110,7 @@ startQuizButton.addEventListener("click", function (event) {
     // * the quiz should end, meaning if there is still time ticking down to the 0, the time is saved in local storage, and the 'end of quiz' screen should display
 
 
-// TODO: End of quiz screem:
+// TODO: End of quiz screen:
  function endQuiz() {
     const endScreen = document.getElementById("end-screen");
     const pctScore = document.getElementById("pct-score");
