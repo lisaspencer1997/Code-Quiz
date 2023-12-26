@@ -16,10 +16,10 @@ startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
     
     // * need to update time score from local storage every new quiz
-     
-     localStorage.removeItem("timeScore");
+    
+    localStorage.removeItem("timeScore");
 
-     timerElement.textContent = timeAllowed;
+    timerElement.textContent = timeAllowed;
 
     startScreen.classList.add("hide");
     questionsSection.classList.remove("hide");
@@ -27,7 +27,7 @@ startQuizButton.addEventListener("click", function (event) {
 
     // * start the timer
     
-     startTimer();    
+    startTimer();    
     
     // * function to start timer
 
@@ -67,10 +67,10 @@ startQuizButton.addEventListener("click", function (event) {
             const currentQuestion = questions[currentQuestionIndex];
         
          //  setting the title on the screen
-         questionTitle.textContent = currentQuestion.title;
+        questionTitle.textContent = currentQuestion.title;
 
          //  clear the choices container
-         choicesContainer.innerHTML = "";
+        choicesContainer.innerHTML = "";
     
          //  display the multiple-choice answers as listed buttons
             currentQuestion.choices.forEach((choice, index) => {
@@ -88,7 +88,7 @@ startQuizButton.addEventListener("click", function (event) {
 
         } else {
         endQuiz();
-     }
+    }
 
     }
     // TODO: When an answer is selected (the button is clicked), the code needs to remember which choice was selected (i.e. was it correct or incorrect) and then should display the next question:
@@ -96,7 +96,7 @@ startQuizButton.addEventListener("click", function (event) {
     // ~ When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
 
         //  remember the users choice as either correct or incorrect
-         function remUserChoice(userChoice, correctAnswer) {
+        function remUserChoice(userChoice, correctAnswer) {
             
             const isCorr = userChoice === correctAnswer;
 
@@ -106,25 +106,25 @@ startQuizButton.addEventListener("click", function (event) {
             }
 
             // check if question is last one
-             if (currentQuestionIndex === questions.length - 1) {
+            if (currentQuestionIndex === questions.length - 1) {
                 const timeRemaining = Math.max(0, timeAllowed);
 
                 // store it in local
-                 localStorage.setItem("timeScore", timeRemaining);
+                localStorage.setItem("timeScore", timeRemaining);
 
                 // display time remaining on the page
-                 timeScoreElement.textContent = timeRemaining;
+                timeScoreElement.textContent = timeRemaining;
             }
 
             //  move to the next question
-             currentQuestionIndex++;
-             loadQuestion();
+            currentQuestionIndex++;
+            loadQuestion();
 
         }
 
 
 // TODO: ///////////////////////////////////////////////////////////////////////////////////////////////////////////////End of quiz screen:
- function endQuiz() {
+function endQuiz() {
     const endScreen = document.getElementById("end-screen");
     const pctScore = document.getElementById("pct-score");
     const numScore = document.getElementById("num-score");
@@ -132,8 +132,8 @@ startQuizButton.addEventListener("click", function (event) {
 
     
     //  display end screen and hide questions page
-     questionsSection.classList.add("hide");
-     endScreen.classList.remove("hide");
+    questionsSection.classList.add("hide");
+    endScreen.classList.remove("hide");
 
     // * displays the score
         //  the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
@@ -156,7 +156,7 @@ startQuizButton.addEventListener("click", function (event) {
     // * Add initials to add to leaderboard:
         // ^ a textbox should appear to add name/initials to leaderboard with a submit button
         // ^ when submimt button is clicked, the text is cleared, and the initials plus the score and time are saved in local storage
-     
+    
     // * 'go back' button
         // ^ there should be a 'go back' button which would bring you back to the start of the quiz, and the quiz should be able to be taken again. 
 
@@ -166,12 +166,12 @@ const initialsInput = document.getElementById("initials");
 const submitButton = document.getElementById("submit");
 
     // add an event listener to the submit button
-     submitButton.addEventListener("click", function() {
+    submitButton.addEventListener("click", function() {
         const playerInitials = initialsInput.value.trim();
 
         if (playerInitials !== "") {
             //get exisiting scores from local storage or start an empty array
-            const highscores = JSON.parse(localStorage.getItem("highscores"))
+            const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
             //create new entry
             const newHighScore = {
@@ -192,11 +192,6 @@ const submitButton = document.getElementById("submit");
 
 
 
-
-
-
-
-
     // * this is in a new HTML page - create new HTML page (look in folder)
     // * the leaderboard should show in the list order:
         // ^ the initials
@@ -204,4 +199,4 @@ const submitButton = document.getElementById("submit");
         // ^ the score they got
     // * 'back to the home screen' button should have a link back to the game page
 
- }
+}
