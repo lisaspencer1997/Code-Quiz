@@ -9,6 +9,7 @@ let correctAnswers = 0;
 let timer;
 let timeAllowed = 7; // ! changing to 7 second to make testing easier -- remember to change to higher later
 let timeSubtract = 2 // ! changing to 7 second to make testing easier -- remember to change to higher later
+let quizEnded = false;
 
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
@@ -187,34 +188,37 @@ const initialsInput = document.getElementById("initials");
 const submitButton = document.getElementById("submit");
 
     // add an event listener to the submit button
-    submitButton.addEventListener("click", function() {
+    submitButton.addEventListener("click", function (event) {
         event.preventDefault();
+
+        if(!quizEnded) {
+            quizEnded = true;
         
-        submitButton.disabled = true;
+            submitButton.disabled = true;
 
-        showSubmit("Submitted!");
-        
-        const playerInitials = initialsInput.value.trim();
+            showSubmit("Submitted!");
+            
+            const playerInitials = initialsInput.value.trim();
 
-        if (playerInitials !== "") {
-            //get exisiting scores from local storage or start an empty array
-            const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+            if (playerInitials !== "") {
+                //get exisiting scores from local storage or start an empty array
+                const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
-            //create new entry
-            const newHighScore = {
-                initials: playerInitials,
-                numScore: correctAnswers,
-                pctScore: (correctAnswers / questions.length) * 100,
-                time: localStorage.getItem("timeScore") || 0,
-            };
+                //create new entry
+                const newHighScore = {
+                    initials: playerInitials,
+                    numScore: correctAnswers,
+                    pctScore: (correctAnswers / questions.length) * 100,
+                    time: localStorage.getItem("timeScore") || 0,
+                };
 
-            //add the new score to the array
-            highscores.push(newHighScore);
+                //add the new score to the array
+                highscores.push(newHighScore);
 
-            //save the new score to the local storage
-            localStorage.setItem("highscores", JSON.stringify(highscores));
+                //save the new score to the local storage
+                localStorage.setItem("highscores", JSON.stringify(highscores));
 
-        }
-    })
-
+            }
+        }   
+    });
 }
