@@ -1,7 +1,7 @@
 # Week 6 Challenge: Code Quiz
 
 ## Project status
-Starting project at 11:51am on Fri 22nd Dec 2023
+Most acceptance criteria complete. Only current problem is duplicate entries for every 1 entry. 
 
 ## Name
 Lisa Spencer: Code Quiz

@@ -8,6 +8,7 @@ let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let timer;
 let timeAllowed = 7; // ! changing to 7 second to make testing easier -- remember to change to higher later
+let timeSubtract = 2 // ! changing to 7 second to make testing easier -- remember to change to higher later
 
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
@@ -103,6 +104,9 @@ startQuizButton.addEventListener("click", function (event) {
             //  update the score of correct answers
             if (isCorr) {
                 correctAnswers++;
+            } else {
+                timeAllowed = Math.max(0, timeAllowed - timeSubtract);
+                timerElement.textContent = timeAllowed;
             }
 
             // check if question is last one
@@ -153,13 +157,6 @@ function endQuiz() {
         timeScoreElement.textContent = timeScore;
         
 
-    // * Add initials to add to leaderboard:
-        // ^ a textbox should appear to add name/initials to leaderboard with a submit button
-        // ^ when submimt button is clicked, the text is cleared, and the initials plus the score and time are saved in local storage
-    
-    // * 'go back' button
-        // ^ there should be a 'go back' button which would bring you back to the start of the quiz, and the quiz should be able to be taken again. 
-
 // TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
 
 const initialsInput = document.getElementById("initials");
@@ -193,14 +190,5 @@ const submitButton = document.getElementById("submit");
 
         }
     })
-
-
-
-    // * this is in a new HTML page - create new HTML page (look in folder)
-    // * the leaderboard should show in the list order:
-        // ^ the initials
-        // ^ the time they got
-        // ^ the score they got
-    // * 'back to the home screen' button should have a link back to the game page
 
 }
