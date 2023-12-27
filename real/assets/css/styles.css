@@ -97,3 +97,25 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+#highscores-table {
+  width: 100%;
+  position: relative;
+  table-layout: fixed;
+}
+
+#highscores-body {
+  position: relative;
+  text-align: center;
+  justify-content: center;
+}
+
+#highscores-table th {
+  border-bottom: 1px solid;
+  border-color: #f3edfc;
+}
+
+#highscores-table td {
+  border-bottom: 1px solid;
+  border-color: #f3edfc;
+}
