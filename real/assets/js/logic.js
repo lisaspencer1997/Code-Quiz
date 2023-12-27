@@ -167,6 +167,10 @@ const submitButton = document.getElementById("submit");
 
     // add an event listener to the submit button
     submitButton.addEventListener("click", function() {
+        event.preventDefault();
+        
+        submitButton.disabled = true;
+        
         const playerInitials = initialsInput.value.trim();
 
         if (playerInitials !== "") {

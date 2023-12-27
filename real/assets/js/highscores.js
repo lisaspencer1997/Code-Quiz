@@ -1,13 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
     const highscoresList = document.getElementById("highscores");
-
-    //get highscores from local
-    const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    const clearButton = document.getElementById("clear");
 
     // display highscores
-    highscores.forEach((entry, index) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${entry.initials} - Score: ${entry.score}, Time: ${entry.time} seconds`;
-        highscoresList.appendChild(listItem);
+    function displayHighScores() {
+
+        highscoresList.innerHTML = "";
+        
+        const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+        
+        highscores.forEach((entry, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${entry.initials} - Correct Questions: ${entry.numScore}, Percentage score: ${entry.pctScore}%, Time: ${entry.time} seconds remaining`;
+            highscoresList.appendChild(listItem);
+        })
+
+    }
+
+    displayHighScores();
+
+
+    //clear the highscores
+    clearButton.addEventListener("click", function() {
+        localStorage.removeItem("highscores");
+        displayHighScores();
     })
 });
+
