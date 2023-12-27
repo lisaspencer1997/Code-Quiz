@@ -4,6 +4,7 @@ const questionsSection = document.getElementById("questions");
 const timerElement = document.getElementById("seconds-counting-down");
 const timeScoreElement = document.getElementById("time-score");
 const timeSeconds = document.getElementById("timeAllowed");
+const viewHighScoresButton = document.getElementById("viewHighScores");
 
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
@@ -178,8 +179,16 @@ function endQuiz() {
 
     function showSubmit(message) {
         const submitMessage = document.getElementById("submitted");
-        submitMessage.textContent = message;
+        submitMessage.innerHTML = `${message} <button id="viewHighscores">View the Leaderboard</button>`;
         submitMessage.classList.remove("hide");
+        
+        const viewHighScoresButton = document.getElementById("viewHighscores");
+    
+        viewHighScoresButton.addEventListener("click", function() {
+            window.location.href = "highscores.html"; 
+        });
+        
+        
     }
 
     const initialsInput = document.getElementById("initials");
@@ -197,6 +206,8 @@ function endQuiz() {
             showSubmit("Submitted!");
 
             const playerInitials = initialsInput.value.trim();
+
+            
 
             if (playerInitials !== "") {
                 //get exisiting scores from local storage or start an empty array
@@ -219,4 +230,6 @@ function endQuiz() {
             }
         }
     });
+
+    
 }
