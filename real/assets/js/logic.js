@@ -177,6 +177,12 @@ function endQuiz() {
 
 // TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
 
+function showSubmit (message) {
+        const submitMessage = document.getElementById("submitted");
+        submitMessage.textContent = message;
+        submitMessage.classList.remove("hide");
+}
+
 const initialsInput = document.getElementById("initials");
 const submitButton = document.getElementById("submit");
 
@@ -185,6 +191,8 @@ const submitButton = document.getElementById("submit");
         event.preventDefault();
         
         submitButton.disabled = true;
+
+        showSubmit("Submitted!");
         
         const playerInitials = initialsInput.value.trim();
 
