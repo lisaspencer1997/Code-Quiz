@@ -8,7 +8,7 @@ const timeSeconds = document.getElementById("timeAllowed");
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let timer;
-let timeAllowed = 3; 
+let timeAllowed = 3;
 let timeSubtract = 3;
 let quizEnded = false;
 
@@ -18,31 +18,31 @@ timeSeconds.textContent = timeAllowed;
 
 startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
-    
+
     // * need to update time score from local storage every new quiz
 
-    
+
     localStorage.removeItem("timeScore");
-    
+
     timerElement.textContent = timeAllowed;
-    
+
 
     startScreen.classList.add("hide");
     questionsSection.classList.remove("hide");
     loadQuestion();
 
     // * start the timer
-    
-    startTimer();    
-    
+
+    startTimer();
+
     // * function to start timer
 
     function startTimer() {
-        timer = setInterval (function () {
+        timer = setInterval(function () {
             timeAllowed--;
             timerElement.textContent = timeAllowed;
 
-            if (timeAllowed <=0 | currentQuestionIndex === questions.length) {
+            if (timeAllowed <= 0 | currentQuestionIndex === questions.length) {
                 clearInterval(timer);
 
                 // if the last uestion is answered, 
@@ -52,97 +52,97 @@ startQuizButton.addEventListener("click", function (event) {
                     timeScoreElement.textContent = timeRemaining;
                     timerElement.textContent = timeRemaining;
                 }
-                    
+
                 endQuiz();
             }
-        
+
         }, 1000);
 
-    };     
+    };
 
 });
 
 // TODO: When the first question loads, it should:
 
-    function loadQuestion() {
-        const questionTitle = document.getElementById("question-title");
-        const choicesContainer = document.getElementById("choices");
+function loadQuestion() {
+    const questionTitle = document.getElementById("question-title");
+    const choicesContainer = document.getElementById("choices");
 
-        //  we need to check if there are any questions left in the bank
-        if (currentQuestionIndex < questions.length) {
-            const currentQuestion = questions[currentQuestionIndex];
-        
-         //  setting the title on the screen
+    //  we need to check if there are any questions left in the bank
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+
+        //  setting the title on the screen
         questionTitle.textContent = currentQuestion.title;
 
-         //  clear the choices container
+        //  clear the choices container
         choicesContainer.innerHTML = "";
-    
-         //  display the multiple-choice answers as listed buttons
-            currentQuestion.choices.forEach((choice, index) => {
-                const choiceButton = document.createElement("button");
-                choiceButton.className = "choice-button";
-                choiceButton.textContent = choice;
-                
-                // buttons should be clickable and saved
-                choiceButton.addEventListener("click", function () {
-                    remUserChoice(choice, currentQuestion.correctAnswer);
-                });
 
-                choicesContainer.appendChild(choiceButton);
-            })
+        //  display the multiple-choice answers as listed buttons
+        currentQuestion.choices.forEach((choice, index) => {
+            const choiceButton = document.createElement("button");
+            choiceButton.className = "choice-button";
+            choiceButton.textContent = choice;
 
-        } else {
+            // buttons should be clickable and saved
+            choiceButton.addEventListener("click", function () {
+                remUserChoice(choice, currentQuestion.correctAnswer);
+            });
+
+            choicesContainer.appendChild(choiceButton);
+        })
+
+    } else {
         endQuiz();
     }
 
+}
+
+
+//  remember the users choice as either correct or incorrect
+function remUserChoice(userChoice, correctAnswer) {
+
+    const isCorr = userChoice === correctAnswer;
+
+    //  update the score of correct answers
+    if (isCorr) {
+        correctAnswers++;
+        showFeedback("Correct!")
+    } else {
+        timeAllowed = Math.max(0, timeAllowed - timeSubtract);
+        timerElement.textContent = timeAllowed;
+        showFeedback("Incorrect!")
     }
 
+    // check if question is last one
+    if (currentQuestionIndex === questions.length - 1) {
+        const timeRemaining = Math.max(0, timeAllowed);
 
-        //  remember the users choice as either correct or incorrect
-        function remUserChoice(userChoice, correctAnswer) {
-            
-            const isCorr = userChoice === correctAnswer;
+        // store it in local
+        localStorage.setItem("timeScore", timeRemaining);
 
-            //  update the score of correct answers
-            if (isCorr) {
-                correctAnswers++;
-                showFeedback("Correct!")
-            } else {
-                timeAllowed = Math.max(0, timeAllowed - timeSubtract);
-                timerElement.textContent = timeAllowed;
-                showFeedback("Incorrect!")
-            }
+        // display time remaining on the page
+        timeScoreElement.textContent = timeRemaining;
+        timerElement.textContent = timeRemaining;
+    }
 
-            // check if question is last one
-            if (currentQuestionIndex === questions.length - 1) {
-                const timeRemaining = Math.max(0, timeAllowed);
+    //  move to the next question
+    currentQuestionIndex++;
+    loadQuestion();
 
-                // store it in local
-                localStorage.setItem("timeScore", timeRemaining);
-
-                // display time remaining on the page
-                timeScoreElement.textContent = timeRemaining;
-                timerElement.textContent = timeRemaining;
-            }
-
-            //  move to the next question
-            currentQuestionIndex++;
-            loadQuestion();
-
-        }
+}
 
 
 // need to create function to show the feedback message
 
-function showFeedback (message) {
+function showFeedback(message) {
     const feedbackElemetn = document.getElementById("feedback");
     feedbackElemetn.textContent = message;
     feedbackElemetn.classList.remove("hide");
 
     // need to hide the message when the next question loads
     setTimeout(() => {
-        feedbackElemetn.textContent =  "";
+        feedbackElemetn.textContent = "";
         feedbackElemetn.classList.add("hide");
     }, 1000);
 }
@@ -154,51 +154,49 @@ function endQuiz() {
     const numScore = document.getElementById("num-score");
     const timeScoreElement = document.getElementById("time-score");
 
-    
+
     //  display end screen and hide questions page
     questionsSection.classList.add("hide");
     endScreen.classList.remove("hide");
 
     // * displays the score
-        //  the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
+    //  the score is determined by how many times the 'correct' button was clicked, it has no affiliation with any 'incorrect' buttons
 
-        const numsScore = correctAnswers // the amount of correct answers
-        const pctsScore = (correctAnswers / questions.length) * 100 //show as percentage
-        pctScore.textContent = `${pctsScore.toFixed(1)}%`;
-        numScore.textContent = `${numsScore} out of ${questions.length} questions correct!`;
+    const numsScore = correctAnswers // the amount of correct answers
+    const pctsScore = (correctAnswers / questions.length) * 100 //show as percentage
+    pctScore.textContent = `${pctsScore.toFixed(1)}%`;
+    numScore.textContent = `${numsScore} out of ${questions.length} questions correct!`;
 
 
 
     // * displays the time remaining
-        // ? & if the timer ended at 0 and not all questions were answered, it should display "no remaming time left" *bonus if you have time left
 
-        // if all questions were answered, the time should be stored at the moment the last button was clicked (whether it was correct or incorrect) 
-        const timeScore = localStorage.getItem("timeScore");
-        timeScoreElement.textContent = timeScore;
-        
+    const timeScore = localStorage.getItem("timeScore");
+    timeScoreElement.textContent = timeScore !== null && timeScore !== undefined ? timescore : "0";
 
-// TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
 
-function showSubmit (message) {
+    // TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
+
+    function showSubmit(message) {
         const submitMessage = document.getElementById("submitted");
         submitMessage.textContent = message;
         submitMessage.classList.remove("hide");
-}
+    }
 
-const initialsInput = document.getElementById("initials");
-const submitButton = document.getElementById("submit");
+    const initialsInput = document.getElementById("initials");
+    const submitButton = document.getElementById("submit");
 
     // add an event listener to the submit button
     submitButton.addEventListener("click", function (event) {
         event.preventDefault();
 
-        if(!quizEnded) {
+        if (!quizEnded) {
             quizEnded = true;
-        
+
             submitButton.disabled = true;
 
             showSubmit("Submitted!");
-            
+
             const playerInitials = initialsInput.value.trim();
 
             if (playerInitials !== "") {
@@ -220,6 +218,6 @@ const submitButton = document.getElementById("submit");
                 localStorage.setItem("highscores", JSON.stringify(highscores));
 
             }
-        }   
+        }
     });
 }

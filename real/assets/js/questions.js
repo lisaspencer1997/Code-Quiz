@@ -24,7 +24,7 @@ const questions = [
     {
         title: "What is Chandler Bing's middle name?",
         choices: ["Joey", "Gene", "Muriel", "Maggie"],
-        correctAnswer: "A turkey",
+        correctAnswer: "Muriel",
     },
     {
         title: "What was the name of the coffee shop the friends all hung out at?",
