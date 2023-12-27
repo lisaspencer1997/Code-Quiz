@@ -104,9 +104,11 @@ startQuizButton.addEventListener("click", function (event) {
             //  update the score of correct answers
             if (isCorr) {
                 correctAnswers++;
+                showFeedback("Correct!")
             } else {
                 timeAllowed = Math.max(0, timeAllowed - timeSubtract);
                 timerElement.textContent = timeAllowed;
+                showFeedback("Incorrect!")
             }
 
             // check if question is last one
@@ -118,6 +120,7 @@ startQuizButton.addEventListener("click", function (event) {
 
                 // display time remaining on the page
                 timeScoreElement.textContent = timeRemaining;
+                timerElement.textContent = timeRemaining;
             }
 
             //  move to the next question
@@ -125,6 +128,21 @@ startQuizButton.addEventListener("click", function (event) {
             loadQuestion();
 
         }
+
+
+// need to create function to show the feedback message
+
+function showFeedback (message) {
+    const feedbackElemetn = document.getElementById("feedback");
+    feedbackElemetn.textContent = message;
+    feedbackElemetn.classList.remove("hide");
+
+    // need to hide the message when the next question loads
+    setTimeout(() => {
+        feedbackElemetn.textContent =  "";
+        feedbackElemetn.classList.add("hide");
+    }, 1000);
+}
 
 
 // TODO: ///////////////////////////////////////////////////////////////////////////////////////////////////////////////End of quiz screen:
