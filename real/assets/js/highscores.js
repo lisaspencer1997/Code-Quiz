@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${index + 1}</td>
                 <td>${entry.initials}</td>
                 <td>${entry.numScore}</td>
-                <td>${entry.pctScore}%</td>
+                <td>${entry.pctScore.toFixed(1)}%</td>
                 <td>${entry.time}</td>
             `;
             highscoresBody.appendChild(row);

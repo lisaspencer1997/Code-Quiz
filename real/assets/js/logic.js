@@ -3,14 +3,16 @@ const startScreen = document.getElementById("start-screen");
 const questionsSection = document.getElementById("questions");
 const timerElement = document.getElementById("seconds-counting-down");
 const timeScoreElement = document.getElementById("time-score");
+const timeSeconds = document.getElementById("timeAllowed");
 
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let timer;
-let timeAllowed = 7; // ! changing to 7 second to make testing easier -- remember to change to higher later
-let timeSubtract = 2 // ! changing to 7 second to make testing easier -- remember to change to higher later
+let timeAllowed = 3; 
+let timeSubtract = 3;
 let quizEnded = false;
 
+timeSeconds.textContent = timeAllowed;
 
 // TODO: When the 'Start Quiz' button is clicked, it should:
 
@@ -18,10 +20,12 @@ startQuizButton.addEventListener("click", function (event) {
     event.preventDefault();
     
     // * need to update time score from local storage every new quiz
+
     
     localStorage.removeItem("timeScore");
-
+    
     timerElement.textContent = timeAllowed;
+    
 
     startScreen.classList.add("hide");
     questionsSection.classList.remove("hide");
@@ -93,9 +97,7 @@ startQuizButton.addEventListener("click", function (event) {
     }
 
     }
-    // TODO: When an answer is selected (the button is clicked), the code needs to remember which choice was selected (i.e. was it correct or incorrect) and then should display the next question:
-    
-    // ~ When the INCORRECT answer is selected (either 3 of the buttons are clicked), it should REMOVE 3 SECONDS FROM THE TIMER INSTANTLY
+
 
         //  remember the users choice as either correct or incorrect
         function remUserChoice(userChoice, correctAnswer) {
@@ -146,7 +148,6 @@ function showFeedback (message) {
 }
 
 
-// TODO: ///////////////////////////////////////////////////////////////////////////////////////////////////////////////End of quiz screen:
 function endQuiz() {
     const endScreen = document.getElementById("end-screen");
     const pctScore = document.getElementById("pct-score");
@@ -163,7 +164,7 @@ function endQuiz() {
 
         const numsScore = correctAnswers // the amount of correct answers
         const pctsScore = (correctAnswers / questions.length) * 100 //show as percentage
-        pctScore.textContent = `${pctsScore}%`;
+        pctScore.textContent = `${pctsScore.toFixed(1)}%`;
         numScore.textContent = `${numsScore} out of ${questions.length} questions correct!`;
 
 
