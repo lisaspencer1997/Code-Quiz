@@ -8,7 +8,7 @@ const timeSeconds = document.getElementById("timeAllowed");
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let timer;
-let timeAllowed = 3;
+let timeAllowed = 50;
 let timeSubtract = 3;
 let quizEnded = false;
 
@@ -172,7 +172,6 @@ function endQuiz() {
     // * displays the time remaining
 
     const timeScore = localStorage.getItem("timeScore");
-    timeScoreElement.textContent = timeScore !== null && timeScore !== undefined ? timescore : "0";
 
 
     // TODO: View Highscores link should take me to a leaderboard where I can see all the local scores/times displayed in a list format:
