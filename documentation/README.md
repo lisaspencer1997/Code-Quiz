@@ -37,6 +37,10 @@ Contact me on lisa-spencer@outlook.com if something is not working as intended.
 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality
 * https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
 * https://stackoverflow.com/questions/25594427/what-is-the-meaning-of-functionevent-in-js
+* https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild
+* https://developer.mozilla.org/en-US/docs/Web/API/clearInterval
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR
+* https://www.w3schools.com/jsref/jsref_max.asp
 
 
 ## License
