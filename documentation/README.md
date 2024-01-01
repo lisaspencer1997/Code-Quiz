@@ -1,15 +1,15 @@
-# Week 6 Challenge: Code Quiz
+# Week 6 Challenge: Quiz
 
 ## Project status
-Acceptance criteria complete. No bugs. As for challenge upload, I am going through browser history to update my acknowledgements. 
+Acceptance criteria complete. No bugs.
 
 ## Name
 Lisa Spencer: Code Quiz
 
 ## Description
-This page is the challenge/homework for Week 6 of my Bootcamp course. The aim is to create an online coding quiz using HTML, CSS and Javascript. The challenge asks us to build a timed coding quiz with multiple-choice questions. 
+This page is the challenge/homework for Week 6 of my Bootcamp course. The aim is to create an online quiz using HTML, CSS and Javascript. Instructors and TAs informed that the quiz can be on any subject so I have chosen the TV Show: "Friends" as the subject! The challenge asks us to build a timed quiz with multiple-choice questions. 
 
-The code quiz must contain the following requirements:
+The quiz must contain the following requirements:
 
 * A start button that, when clicked, a timer starts and the first question appears.
  
